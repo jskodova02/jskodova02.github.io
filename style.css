@@ -347,13 +347,9 @@ h1,h1 em,h1 span{background:none;-webkit-background-clip:initial;background-clip
 @media(min-width:761px) and (max-width:1179px){.viewport-reset{top:102px}.viewport-legend{max-height:calc(100% - 184px)}}
 @media(max-width:760px){.viewport-toggle{column-gap:12px;row-gap:6px}.viewport-toggle>label{gap:6px}.viewer-message{top:96px}}
 
-/* Keep the pallet heading anchored as selection and loading details change. */
-.selection-head{align-items:flex-start}
-.selection-head .pallet-panel-title{flex:none;line-height:20px}
-.selection-head .row-summary{min-width:0;align-self:stretch}
-.selection-head #rowTitle{line-height:18px;min-height:18px;font-variant-numeric:tabular-nums}
-.selection-head #rowMeta{display:block;line-height:16px;min-height:32px;margin-top:5px;overflow-wrap:anywhere}
-@media(min-width:1180px){
- .selection-head{flex:0 0 auto;justify-content:flex-start;align-items:stretch}
- .selection-head .row-summary{flex:0 0 auto}
-}
+/* Stable pallet cards: loading and selection never resize the list. */
+#rowItems{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-rows:56px;align-content:start;align-items:stretch;gap:8px;scrollbar-gutter:stable}
+#rowItems .pallet-chip{box-sizing:border-box;width:100%;min-width:0;max-width:none;height:56px;min-height:56px;max-height:56px;padding:8px;grid-template-rows:18px 16px;row-gap:2px;flex:none;overflow:hidden}
+#rowItems .pallet-chip small{margin-top:0;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+#rowItems .pallet-chip>span{grid-row:1 / 3}
+@media(min-width:1180px){#rowItems{grid-template-columns:minmax(0,1fr)}}

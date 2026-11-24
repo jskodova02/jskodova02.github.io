@@ -60,8 +60,6 @@ function renderRows(){
  $('#clearPackageSearch').hidden=!searching;
  const matches=searching?matchingPackages(query):[];
  $('#packageSearchStatus').textContent=searching?`${matches.length} ${matches.length===1?'package':'packages'} found`:'';
- $('#rowTitle').textContent=item?`Pallet ${pad(item.number)} · Row ${item.row}`:row?'Row '+row.id+' / '+result.rows.length:result.placed.length+' pallets';
- $('#rowMeta').textContent=item?`${item.name} · Story ${item.story} · ${item.number<=shown?'Loaded':'Upcoming'}`:row?`${row.depth.toFixed(1)} cm deep · ${row.items.length} packages · ${row.stories.length} ${row.stories.length===1?'story':'stories'}`:'';
  const list=searching?matches:row?row.items:result.placed;
   $('#rowItems').innerHTML=list.map(b=>`<button class="pallet-chip ${b.number===selectedPackage?'active':''} ${b.number<=shown?'loaded':''}" data-package="${b.number}" aria-pressed="${b.number===selectedPackage}" aria-label="Select pallet ${pad(b.number)}, ${esc(b.name)}, row ${b.row}"><span style="background:${b.color}">${pad(b.number)}</span><strong>${esc(b.name)}</strong><small>R${b.row} · S${b.story} ${b.number<=shown?'· ✓':''}</small></button>`).join('');
  if(searching&&!matches.length)$('#rowItems').innerHTML='<p class="search-empty">No matching packages.</p>';
