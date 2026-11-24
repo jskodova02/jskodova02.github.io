@@ -53,6 +53,7 @@ function matchingPackages(query){
  return result.placed.filter(b=>{const label=clean(`${b.name} pallet ${b.number} ${pad(b.number)}`);return words.every(word=>label.includes(word))});
 }
 function renderRows(){
+ const palletListScroll=$('#rowItems').scrollTop;
  $('#rowCount').textContent=result.rows.length;
  $('#rowList').innerHTML=result.rows.map(r=>{const loaded=Math.max(0,Math.min(r.items.length,shown-r.start));return `<button class="row-card ${selectedRow===r.id?'active':''} ${loaded===r.items.length?'loaded':loaded?'partial':''}" data-row="${r.id}" aria-pressed="${selectedRow===r.id}"><span class="row-number">${pad(r.id)}</span><span><strong>Row ${r.id}${r.id===1?' · Front':''}</strong><small>${r.items.length} ${r.items.length===1?'pallet':'pallets'} · ${loaded} loaded</small></span><i></i></button>`}).join('');
  $('#allRows').classList.toggle('active',selectedRow===null);
@@ -64,6 +65,7 @@ function renderRows(){
   $('#rowItems').innerHTML=list.map(b=>`<button class="pallet-chip ${b.number===selectedPackage?'active':''} ${b.number<=shown?'loaded':''}" data-package="${b.number}" aria-pressed="${b.number===selectedPackage}" aria-label="Select pallet ${pad(b.number)}, ${esc(b.name)}, row ${b.row}"><span style="background:${b.color}">${pad(b.number)}</span><strong>${esc(b.name)}</strong><small>R${b.row} · S${b.story} ${b.number<=shown?'· ✓':''}</small></button>`).join('');
  if(searching&&!matches.length)$('#rowItems').innerHTML='<p class="search-empty">No matching packages.</p>';
  $('#packageDetails').innerHTML=item?`<div class="pallet-detail-title"><span style="background:${item.color}">${pad(item.number)}</span><div><strong>${esc(item.name)}</strong><small>${item.number<=shown?'Loaded':'Upcoming'} · Step ${item.number} of ${result.placed.length}</small></div></div><dl><div><dt>Overall size</dt><dd>${item.l} × ${item.w} × ${item.h} cm</dd></div><div><dt>Weight / orientation</dt><dd>${item.weight} kg · ${item.rotated?'90°':'0°'} upright</dd></div><div><dt>Position</dt><dd>Row ${item.row} · ${item.story===1?'Ground floor':'Story '+item.story}</dd></div><div><dt>Supported by</dt><dd>${item.supportNumber?'Pallet '+pad(item.supportNumber):'Truck bed'}</dd></div></dl>`:'';
+ $('#rowItems').scrollTop=palletListScroll;
  updateStep();
 }
 function clearSelection(){
